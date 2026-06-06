@@ -142,6 +142,44 @@ pytest
 certbot plugins | grep -A 5 dns-aliyun-esa
 ```
 
+本地构建并检查包元数据：
+
+```bash
+python -m pip install --upgrade build twine
+rm -rf dist build *.egg-info src/*.egg-info
+python -m build
+python -m twine check dist/*
+```
+
+## 发布
+
+本仓库包含 GitHub Actions 工作流：
+
+- [.github/workflows/ci.yml](.github/workflows/ci.yml)：运行测试、插件发现检查、包构建和元数据检查。
+- [.github/workflows/publish.yml](.github/workflows/publish.yml)：在 GitHub Release 发布时发布到 PyPI。
+
+发布使用 PyPI Trusted Publishing，因此不需要把 PyPI API Token 保存到 GitHub Secrets。
+
+### 配置 PyPI Trusted Publishing
+
+在 PyPI 项目 `certbot-dns-aliyun-esa` 的设置里添加 pending trusted publisher：
+
+| 字段 | 值 |
+| --- | --- |
+| Owner | `lampofaladdin` |
+| Repository name | `certbot-dns-aliyun-esa` |
+| Workflow name | `publish.yml` |
+| Environment name | `pypi` |
+
+### 发布一个版本
+
+1. 更新 [pyproject.toml](pyproject.toml) 里的 `version`。
+2. 更新 [CHANGELOG.md](CHANGELOG.md)。
+3. 提交并推送到 `main`。
+4. 创建并推送匹配的 tag，例如 `v0.1.1`。
+5. 基于该 tag 创建 GitHub Release。
+6. 发布 GitHub Release 后会触发 PyPI 发布 workflow。
+
 ## 安全建议
 
 - 不要提交任何真实凭证文件。
