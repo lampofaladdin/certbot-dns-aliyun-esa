@@ -134,6 +134,44 @@ Run a basic plugin discovery check:
 certbot plugins | grep -A 5 dns-aliyun-esa
 ```
 
+Build and check the package locally:
+
+```bash
+python -m pip install --upgrade build twine
+rm -rf dist build *.egg-info src/*.egg-info
+python -m build
+python -m twine check dist/*
+```
+
+## Publishing
+
+This repository includes GitHub Actions workflows for CI and PyPI publishing:
+
+- [.github/workflows/ci.yml](.github/workflows/ci.yml) runs tests, plugin discovery, package build, and metadata checks.
+- [.github/workflows/publish.yml](.github/workflows/publish.yml) publishes to PyPI when a GitHub Release is published.
+
+Publishing uses PyPI Trusted Publishing, so no PyPI API token needs to be stored in GitHub secrets.
+
+### Configure PyPI Trusted Publishing
+
+In the PyPI project settings for `certbot-dns-aliyun-esa`, add a pending trusted publisher with:
+
+| Field | Value |
+| --- | --- |
+| Owner | `lampofaladdin` |
+| Repository name | `certbot-dns-aliyun-esa` |
+| Workflow name | `publish.yml` |
+| Environment name | `pypi` |
+
+### Release a version
+
+1. Update `version` in [pyproject.toml](pyproject.toml).
+2. Update [CHANGELOG.md](CHANGELOG.md).
+3. Commit and push the change to `main`.
+4. Create and push a matching tag, for example `v0.1.1`.
+5. Create a GitHub Release from that tag.
+6. Publishing the GitHub Release triggers the PyPI workflow.
+
 ## Security notes
 
 - Do not commit credentials files.
