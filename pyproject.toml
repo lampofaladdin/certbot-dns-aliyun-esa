@@ -1,0 +1,50 @@
+[build-system]
+requires = ["setuptools>=61.0"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "certbot-dns-aliyun-esa"
+version = "0.1.0"
+description = "Aliyun ESA DNS Authenticator plugin for Certbot"
+readme = "README.md"
+requires-python = ">=3.9"
+license = {text = "Apache-2.0"}
+keywords = ["certbot", "dns-01", "aliyun", "esa", "acme"]
+authors = [
+    {name = "aladdin"},
+]
+classifiers = [
+    "Development Status :: 3 - Alpha",
+    "Environment :: Plugins",
+    "Intended Audience :: System Administrators",
+    "License :: OSI Approved :: Apache Software License",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3 :: Only",
+    "Topic :: Internet :: Name Service (DNS)",
+    "Topic :: Security :: Cryptography",
+]
+dependencies = [
+    "certbot>=2.0.0",
+    "alibabacloud-esa20240910>=3.2.2",
+]
+
+[project.optional-dependencies]
+test = [
+    "pytest",
+]
+
+[project.urls]
+Homepage = "https://github.com/lampofaladdin/certbot-dns-aliyun-esa"
+Repository = "https://github.com/lampofaladdin/certbot-dns-aliyun-esa"
+Issues = "https://github.com/lampofaladdin/certbot-dns-aliyun-esa/issues"
+Changelog = "https://github.com/lampofaladdin/certbot-dns-aliyun-esa/blob/main/CHANGELOG.md"
+
+[project.entry-points."certbot.plugins"]
+dns-aliyun-esa = "certbot_dns_aliyun_esa._internal.dns_aliyun_esa:Authenticator"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.pytest.ini_options]
+pythonpath = ["src"]
+testpaths = ["tests"]

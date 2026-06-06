@@ -1,0 +1,33 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.egg-info/
+build/
+dist/
+.eggs/
+
+# Virtual environments
+.venv/
+venv/
+env/
+
+# Test and coverage
+.pytest_cache/
+.coverage
+htmlcov/
+
+# Local credentials and Certbot state
+.certbot-test/
+*.ini
+*.pem
+*.key
+*.crt
+*.csr
+letsencrypt/
+
+# Editors
+.vscode/
+.idea/
+*.swp
+.DS_Store
